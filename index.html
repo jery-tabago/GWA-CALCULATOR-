@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Student Helper</title>
+<style>
+:root{--bg:#f5f6fa;--card:#fff;--ink:#1d2433;--mute:#6b7488;--line:#e2e5ee;--brand:#3b5bdb;--ok:#168a4a;--okbg:#e3f6ea;--bad:#d6293e;--badbg:#fde8eb;--warn:#b86e00;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12151d;--card:#1b1f2b;--ink:#e8ebf3;--mute:#98a0b5;--line:#2c3244;--brand:#7c93ff;--ok:#4cd68a;--okbg:#14301f;--bad:#ff6b7d;--badbg:#3a1a20;--warn:#f0a63a;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#12151d;--card:#1b1f2b;--ink:#e8ebf3;--mute:#98a0b5;--line:#2c3244;--brand:#7c93ff;--ok:#4cd68a;--okbg:#14301f;--bad:#ff6b7d;--badbg:#3a1a20;--warn:#f0a63a;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+.wrap{max-width:860px;margin:0 auto;padding:16px}
+h1{font-size:1.5rem;margin:8px 0 2px}
+.sub{color:var(--mute);margin:0 0 16px}
+.tabs{display:flex;gap:6px;margin-bottom:14px}
+.tab{flex:1;padding:10px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;font:inherit;font-weight:600;cursor:pointer}
+.tab.on{background:var(--brand);color:#fff;border-color:var(--brand)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+input,select{font:inherit;padding:9px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);min-width:0}
+input[type=number]{width:90px}
+button.b{font:inherit;font-weight:600;padding:9px 14px;border-radius:8px;border:0;background:var(--brand);color:#fff;cursor:pointer}
+button.g{background:transparent;color:var(--mute);border:1px solid var(--line)}
+.tbl{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:520px}
+th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line)}
+th{font-size:.8rem;color:var(--mute);text-transform:uppercase;letter-spacing:.04em}
+.pill{display:inline-block;padding:2px 10px;border-radius:99px;font-weight:700;font-size:.85rem}
+.pass{background:var(--okbg);color:var(--ok)}.fail{background:var(--badbg);color:var(--bad)}.none{background:var(--line);color:var(--mute)}
+.gwa{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.big{font-size:2.4rem;font-weight:800;line-height:1}
+.mute{color:var(--mute);font-size:.9rem}
+.days{display:flex;gap:6px;flex-wrap:wrap}
+.days label{border:1px solid var(--line);border-radius:8px;padding:4px 9px;cursor:pointer;font-size:.9rem}
+.days input{display:none}.days input:checked+span{color:var(--brand);font-weight:700}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.chip{border:1px solid var(--line);border-radius:10px;padding:6px 10px;font-size:.85rem;text-align:center;min-width:78px;background:var(--bg)}
+.chip.abs{background:var(--badbg);border-color:var(--bad);color:var(--bad);font-weight:700}
+.chip.pre{background:var(--okbg);border-color:var(--ok);color:var(--ok)}
+.chip.pend{border-style:dashed}
+.chip button{margin-top:4px;font-size:.75rem;padding:2px 8px;border-radius:6px;border:1px solid currentColor;background:transparent;color:inherit;cursor:pointer}
+.x{font-size:1.1rem;display:block}
+.warn{color:var(--warn);font-weight:600}
+.empty{text-align:center;color:var(--mute);padding:18px}
+#auth{max-width:400px;margin:6vh auto 0}
+#auth input{width:100%;margin-bottom:10px}
+#auth .tabs{margin-bottom:12px}
+#auth .b{width:100%}
+.err{color:var(--bad);font-weight:600;min-height:1.4em;margin:0 0 8px;font-size:.9rem}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div id="auth">
+<h1 style="text-align:center">🎓 Student Helper</h1>
+<p class="sub" style="text-align:center">Log in or create an account to continue.</p>
+<div class="card">
+<div class="tabs"><button class="tab on" id="mi" type="button">Log in</button><button class="tab" id="mu" type="button">Create account</button></div>
+<input id="fname" placeholder="Full name" autocomplete="name" hidden>
+<input id="fuser" placeholder="Username" autocomplete="username">
+<input id="fpass" type="password" placeholder="Password" autocomplete="current-password">
+<input id="fconf" type="password" placeholder="Confirm password" autocomplete="new-password" hidden>
+<p class="err" id="err"></p>
+<button class="b" id="go" type="button">Log in</button>
+<p class="mute" style="margin:10px 0 0">Accounts are stored on this device and browser only.</p>
+</div>
+</div>
+<div id="app" hidden>
+<div class="top"><h1>🎓 Student Helper</h1><div><span class="mute" id="hi"></span> <button class="b g" id="out" type="button">Log out</button></div></div>
+<p class="sub">GWA calculator, pass/fail checker and attendance tracker.</p>
+<div class="tabs"><button class="tab on" data-t="gwa">GWA &amp; Pass/Fail</button><button class="tab" data-t="att">Attendance</button></div>
+
+<section id="gwa">
+<div class="card">
+<div class="row">
+<input id="sn" placeholder="Subject name" style="flex:2;min-width:140px">
+<input id="su" type="number" min="0.5" step="0.5" placeholder="Units">
+<input id="sg" type="number" min="1" max="5" step="0.01" placeholder="Grade">
+<button class="b" id="add">Add subject</button>
+</div>
+<p class="mute" style="margin:8px 0 0">Philippine scale: 1.0 is highest, 5.0 is failed. Passing grade:
+<input id="pg" type="number" min="1" max="5" step="0.25" value="3" style="width:70px;padding:4px 6px"> (change if your school differs)</p>
+</div>
+<div class="card gwa"><div><div class="mute">Your GWA</div><div class="big" id="gv">—</div></div><div id="gs"></div></div>
+<div class="card tbl"><table><thead><tr><th>Subject</th><th>Units</th><th>Grade</th><th>Result</th><th></th></tr></thead><tbody id="gb"></tbody></table></div>
+</section>
+
+<section id="att" hidden>
+<div class="card">
+<div class="row"><input id="an" placeholder="Subject name" style="flex:2;min-width:140px"><button class="b" id="aadd">Add class</button></div>
+<p class="mute" style="margin:10px 0 6px">Class days:</p>
+<div class="days" id="dayp"></div>
+<p class="mute" style="margin:10px 0 0">Every past class day that you didn’t mark <b>Present</b> is automatically crossed out with an ✗. Tap <b>Present</b> to fix a day.</p>
+</div>
+<div id="al"></div>
+</section>
+</div>
+</div>
+
+<script>
+const $=s=>document.querySelector(s);
+const DN=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+let S={subs:[],pg:3},cur=null;
+const save=()=>{if(!cur)return;try{localStorage.setItem('shd_'+cur,JSON.stringify(S))}catch(e){}};
+const uid=()=>Math.random().toString(36).slice(2,9);
+const iso=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{
+ document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x===t));
+ $('#gwa').hidden=t.dataset.t!=='gwa';$('#att').hidden=t.dataset.t!=='att';});
+
+$('#dayp').innerHTML=DN.map((d,i)=>`<label><input type="checkbox" value="${i}" ${[1,3,5].includes(i)?'checked':''}><span>${d}</span></label>`).join('');
+$('#pg').value=S.pg;
+$('#pg').oninput=e=>{S.pg=parseFloat(e.target.value)||3;save();render()};
+
+$('#add').onclick=()=>{
+ const n=$('#sn').value.trim(),u=parseFloat($('#su').value),g=$('#sg').value===''?null:parseFloat($('#sg').value);
+ if(!n||!(u>0))return alert('Enter a subject name and units.');
+ if(g!==null&&(g<1||g>5))return alert('Grade must be between 1.0 and 5.0.');
+ S.subs.push({id:uid(),name:n,units:u,grade:g,days:[1,3,5],start:iso(new Date()),rec:{}});
+ $('#sn').value=$('#su').value=$('#sg').value='';save();render();};
+
+$('#aadd').onclick=()=>{
+ const n=$('#an').value.trim();
+ const days=[...document.querySelectorAll('#dayp input:checked')].map(i=>+i.value);
+ if(!n||!days.length)return alert('Enter a subject and pick at least one class day.');
+ const ex=S.subs.find(s=>s.name.toLowerCase()===n.toLowerCase());
+ if(ex){ex.days=days}else S.subs.push({id:uid(),name:n,units:3,grade:null,days,start:iso(new Date()),rec:{}});
+ $('#an').value='';save();render();};
+
+function classDates(s){
+ const out=[],d=new Date(s.start+'T00:00:00'),end=new Date();end.setHours(0,0,0,0);
+ while(d<=end){if(s.days.includes(d.getDay()))out.push(iso(d));d.setDate(d.getDate()+1)}
+ return out;}
+
+function render(){
+ const pg=S.pg;let tu=0,tw=0;
+ $('#gb').innerHTML=S.subs.length?S.subs.map(s=>{
+  const has=s.grade!==null&&s.grade!==undefined;
+  if(has){tu+=s.units;tw+=s.units*s.grade}
+  const res=!has?'<span class="pill none">No grade</span>':s.grade<=pg?'<span class="pill pass">PASSED</span>':'<span class="pill fail">FAILED</span>';
+  return `<tr><td>${esc(s.name)}</td><td>${s.units}</td><td><input type="number" step="0.01" min="1" max="5" value="${has?s.grade:''}" style="width:80px" onchange="setG('${s.id}',this.value)"></td><td>${res}</td><td><button class="b g" onclick="del('${s.id}')">Remove</button></td></tr>`}).join(''):'<tr><td colspan="5" class="empty">No subjects yet. Add your first one above.</td></tr>';
+ if(tu){const g=tw/tu;$('#gv').textContent=g.toFixed(2);
+  const f=S.subs.filter(s=>s.grade!=null&&s.grade>pg).length;
+  $('#gs').innerHTML=(g<=pg?'<span class="pill pass">Overall: PASSING</span>':'<span class="pill fail">Overall: FAILING</span>')+`<div class="mute" style="margin-top:6px">${tu} graded units${f?` · <span class="warn">${f} failed subject${f>1?'s':''}</span>`:''}</div>`;
+ }else{$('#gv').textContent='—';$('#gs').innerHTML='<span class="mute">Enter grades to compute</span>'}
+
+ $('#al').innerHTML=S.subs.length?S.subs.map(s=>{
+  const ds=classDates(s),today=iso(new Date());
+  let abs=0,pre=0;
+  const chips=ds.map(d=>{
+   const st=s.rec[d]||(d<today?'a':'p0');
+   const lbl=new Date(d+'T00:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',weekday:'short'});
+   if(st==='a'){abs++;return `<div class="chip abs"><span class="x">✗</span>${lbl}<br><button onclick="mk('${s.id}','${d}','p')">Was present</button></div>`}
+   if(st==='p'){pre++;return `<div class="chip pre"><span class="x">✓</span>${lbl}<br><button onclick="mk('${s.id}','${d}','a')">Mark absent</button></div>`}
+   return `<div class="chip pend">${lbl}<br><button onclick="mk('${s.id}','${d}','p')">Present</button> <button onclick="mk('${s.id}','${d}','a')">Absent</button></div>`}).join('');
+  const done=abs+pre,pct=done?Math.round(abs/done*100):0;
+  return `<div class="card"><div class="row" style="justify-content:space-between"><b>${esc(s.name)}</b><span class="mute">${s.days.map(i=>DN[i]).join(' · ')}</span></div>
+  <div class="mute">Absences: <b style="color:var(--bad)">${abs}</b> · Present: ${pre} · ${pct}% absent ${pct>20?'<span class="warn">⚠ Above 20%, risk of failing due to absences</span>':''}</div>
+  <div class="chips">${chips||'<span class="mute">First class day will appear here.</span>'}</div></div>`}).join(''):'<div class="card empty">Add a class above to start tracking attendance.</div>';
+ save();}
+
+function setG(id,v){const s=S.subs.find(x=>x.id===id);const g=v===''?null:parseFloat(v);
+ if(g!==null&&(g<1||g>5)){alert('Grade must be between 1.0 and 5.0.');return render()}
+ s.grade=g;render()}
+function del(id){if(confirm('Remove this subject?')){S.subs=S.subs.filter(s=>s.id!==id);render()}}
+function mk(id,d,v){S.subs.find(x=>x.id===id).rec[d]=v;render()}
+/* ---------- accounts ---------- */
+const UK='sh_users';
+const getU=()=>{try{return JSON.parse(localStorage.getItem(UK))||{}}catch(e){return {}}};
+const putU=u=>{try{localStorage.setItem(UK,JSON.stringify(u))}catch(e){}};
+async function hash(p,salt){const b=new TextEncoder().encode(salt+p);const d=await crypto.subtle.digest('SHA-256',b);return [...new Uint8Array(d)].map(x=>x.toString(16).padStart(2,'0')).join('')}
+let mode='in';
+function setMode(m){mode=m;$('#mi').classList.toggle('on',m==='in');$('#mu').classList.toggle('on',m==='up');
+ $('#fname').hidden=$('#fconf').hidden=m==='in';$('#go').textContent=m==='in'?'Log in':'Create account';$('#err').textContent='';
+ $('#fpass').autocomplete=m==='in'?'current-password':'new-password'}
+$('#mi').onclick=()=>setMode('in');$('#mu').onclick=()=>setMode('up');
+function enter(u,name){
+ cur=u;S={subs:[],pg:3};
+ try{const r=localStorage.getItem('shd_'+u);if(r)S=JSON.parse(r)}catch(e){}
+ try{sessionStorage.setItem('sh_sess',u)}catch(e){}
+ $('#hi').textContent='Hi, '+name;$('#pg').value=S.pg;
+ $('#auth').hidden=true;$('#app').hidden=false;render();}
+async function submit(){
+ const err=$('#err');err.textContent='';
+ const u=$('#fuser').value.trim().toLowerCase(),p=$('#fpass').value;
+ if(!u||!p)return err.textContent='Enter your username and password.';
+ const users=getU();
+ try{
+  if(mode==='up'){
+   const n=$('#fname').value.trim();
+   if(!n)return err.textContent='Please enter your name.';
+   if(!/^[a-z0-9_.-]{3,20}$/.test(u))return err.textContent='Username: 3 to 20 letters, numbers, . _ -';
+   if(p.length<6)return err.textContent='Password must be at least 6 characters.';
+   if(p!==$('#fconf').value)return err.textContent='Passwords do not match.';
+   if(users[u])return err.textContent='That username is already taken.';
+   const salt=uid()+uid();users[u]={name:n,salt,hash:await hash(p,salt)};putU(users);enter(u,n);
+  }else{
+   const a=users[u];
+   if(!a||a.hash!==await hash(p,a.salt))return err.textContent='Wrong username or password.';
+   enter(u,a.name);
+  }
+ }catch(e){err.textContent='Something went wrong. Please try again.'}
+ $('#fpass').value=$('#fconf').value='';}
+$('#go').onclick=submit;
+['fname','fuser','fpass','fconf'].forEach(i=>$('#'+i).addEventListener('keydown',e=>{if(e.key==='Enter')submit()}));
+$('#out').onclick=()=>{cur=null;try{sessionStorage.removeItem('sh_sess')}catch(e){}
+ $('#app').hidden=true;$('#auth').hidden=false;$('#fuser').value='';setMode('in')};
+try{const s=sessionStorage.getItem('sh_sess'),a=getU()[s];if(a)enter(s,a.name)}catch(e){}
+</body>
+</html>
